@@ -1,0 +1,489 @@
+openapi: 3.0.0
+info:
+  description: API documentation for managing quests and tracking progress in HarbourEats.
+  title: HarbourEats Quests API
+  version: 1.0.0
+servers:
+- url: /
+paths:
+  /admin/quests:
+    get:
+      description: Retrieve a list of all quests.
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: '#/components/schemas/Quest'
+                type: array
+          description: A list of quests
+      summary: Get all quests
+      tags:
+      - Admin
+    post:
+      description: Create and launch a new quest.
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/QuestInput'
+        required: true
+      responses:
+        "201":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Quest'
+          description: Successfully created
+      summary: Create a new quest
+      tags:
+      - Admin
+  /admin/quests/{id}:
+    delete:
+      description: Delete a specific quest by its ID.
+      parameters:
+      - description: ID of the quest to delete
+        explode: false
+        in: path
+        name: id
+        required: true
+        schema:
+          type: integer
+        style: simple
+      responses:
+        "204":
+          description: Successfully deleted
+      summary: Delete quest by ID
+      tags:
+      - Admin
+    get:
+      description: Retrieve details of a specific quest by its ID.
+      parameters:
+      - description: ID of the quest to retrieve
+        explode: false
+        in: path
+        name: id
+        required: true
+        schema:
+          type: integer
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Quest'
+          description: Details of the quest
+      summary: Get quest by ID
+      tags:
+      - Admin
+    put:
+      description: Update details of a specific quest by its ID.
+      parameters:
+      - description: ID of the quest to update
+        explode: false
+        in: path
+        name: id
+        required: true
+        schema:
+          type: integer
+        style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/QuestInput'
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Quest'
+          description: Successfully updated
+      summary: Update quest by ID
+      tags:
+      - Admin
+  /admin/quests/{quest_id}/tiers:
+    get:
+      description: Retrieve all tiers associated with a specific quest.
+      parameters:
+      - description: ID of the quest
+        explode: false
+        in: path
+        name: quest_id
+        required: true
+        schema:
+          type: integer
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: '#/components/schemas/QuestTier'
+                type: array
+          description: A list of tiers
+      summary: Get all tiers of a quest
+      tags:
+      - Admin
+    post:
+      description: Create a new tier for a specific quest.
+      parameters:
+      - description: ID of the quest
+        explode: false
+        in: path
+        name: quest_id
+        required: true
+        schema:
+          type: integer
+        style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TierInput'
+        required: true
+      responses:
+        "201":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/QuestTier'
+          description: Successfully created
+      summary: Create a new tier for a quest
+      tags:
+      - Admin
+  /admin/quests/{quest_id}/tiers/{tier_id}:
+    delete:
+      description: Delete a specific tier by its ID.
+      parameters:
+      - description: ID of the quest
+        explode: false
+        in: path
+        name: quest_id
+        required: true
+        schema:
+          type: integer
+        style: simple
+      - description: ID of the tier
+        explode: false
+        in: path
+        name: tier_id
+        required: true
+        schema:
+          type: integer
+        style: simple
+      responses:
+        "204":
+          description: Successfully deleted
+      summary: Delete tier by ID
+      tags:
+      - Admin
+    get:
+      description: Retrieve details of a specific tier by its ID.
+      parameters:
+      - description: ID of the quest
+        explode: false
+        in: path
+        name: quest_id
+        required: true
+        schema:
+          type: integer
+        style: simple
+      - description: ID of the tier
+        explode: false
+        in: path
+        name: tier_id
+        required: true
+        schema:
+          type: integer
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/QuestTier'
+          description: Details of the tier
+      summary: Get tier by ID
+      tags:
+      - Admin
+    put:
+      description: Update details of a specific tier by its ID.
+      parameters:
+      - description: ID of the quest
+        explode: false
+        in: path
+        name: quest_id
+        required: true
+        schema:
+          type: integer
+        style: simple
+      - description: ID of the tier
+        explode: false
+        in: path
+        name: tier_id
+        required: true
+        schema:
+          type: integer
+        style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TierInput'
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/QuestTier'
+          description: Successfully updated
+      summary: Update tier by ID
+      tags:
+      - Admin
+  /courier/quests:
+    get:
+      description: Retrieve all quests assigned to the courier.
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: '#/components/schemas/Quest'
+                type: array
+          description: A list of quests
+      summary: Get courier's quests
+      tags:
+      - Courier
+  /courier/quests/{quest_id}/progress:
+    get:
+      description: Retrieve the progress of a specific quest for the courier.
+      parameters:
+      - description: ID of the quest
+        explode: false
+        in: path
+        name: quest_id
+        required: true
+        schema:
+          type: integer
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CourierQuestProgress'
+          description: Courier's quest progress
+      summary: Get quest progress for a courier
+      tags:
+      - Courier
+  /courier/quests/{quest_id}/history:
+    get:
+      description: Retrieve participation history of the courier for a specific quest.
+      parameters:
+      - description: ID of the quest
+        explode: false
+        in: path
+        name: quest_id
+        required: true
+        schema:
+          type: integer
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: '#/components/schemas/QuestParticipationHistory'
+                type: array
+          description: Courier's quest participation history
+      summary: Get courier's quest participation history
+      tags:
+      - Courier
+  /courier/rewards:
+    post:
+      description: Claim rewards earned by the courier.
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RewardClaimInput'
+        required: true
+      responses:
+        "200":
+          description: Rewards claimed successfully
+      summary: Claim rewards
+      tags:
+      - Courier
+  /system/orders:
+    post:
+      description: Update the progress of the courier for completed orders.
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CourierProgressUpdateInput'
+        required: true
+      responses:
+        "200":
+          description: Courier's quest progress updated successfully
+      summary: Update courier quest progress
+      tags:
+      - System
+components:
+  schemas:
+    QuestInput:
+      example:
+        duration: 0
+        name: name
+      properties:
+        name:
+          description: Name of the quest
+          type: string
+        duration:
+          description: Duration of the quest in days
+          type: integer
+      type: object
+    TierInput:
+      example:
+        reward: reward
+        order_goal: 6
+        tier_number: 0
+      properties:
+        tier_number:
+          description: Number representing the tier level
+          type: integer
+        order_goal:
+          description: Number of orders required to achieve this tier
+          type: integer
+        reward:
+          description: Reward associated with achieving this tier
+          type: string
+      type: object
+    RewardClaimInput:
+      example:
+        courier_id: 0
+      properties:
+        courier_id:
+          description: ID of the courier claiming the reward
+          type: integer
+      type: object
+    CourierProgressUpdateInput:
+      example:
+        courier_id: 0
+        orders_delivered: 6
+      properties:
+        courier_id:
+          description: ID of the courier
+          type: integer
+        orders_delivered:
+          description: Number of orders delivered by the courier
+          type: integer
+      type: object
+    Quest:
+      example:
+        duration: 6
+        name: name
+        created_at: 2000-01-23T04:56:07.000+00:00
+        id: 0
+        created_by: 1
+      properties:
+        id:
+          description: Unique identifier for the quest
+          type: integer
+        name:
+          description: Name of the quest
+          type: string
+        duration:
+          description: Duration of the quest in days
+          type: integer
+        created_by:
+          description: ID of the admin who created the quest
+          type: integer
+        created_at:
+          description: Timestamp indicating when the quest was created
+          format: date-time
+          type: string
+      type: object
+    QuestTier:
+      example:
+        reward: reward
+        order_goal: 5
+        tier_number: 1
+        quest_id: 6
+        id: 0
+      properties:
+        id:
+          description: Unique identifier for the quest tier
+          type: integer
+        quest_id:
+          description: ID of the quest to which this tier belongs
+          type: integer
+        tier_number:
+          description: Number representing the tier level
+          type: integer
+        order_goal:
+          description: Number of orders required to achieve this tier
+          type: integer
+        reward:
+          description: Reward associated with achieving this tier
+          type: string
+      type: object
+    CourierQuestProgress:
+      example:
+        current_tier: 1
+        courier_id: 0
+        quest_id: 6
+        orders_delivered: 5
+      properties:
+        courier_id:
+          description: ID of the courier
+          type: integer
+        quest_id:
+          description: ID of the quest
+          type: integer
+        current_tier:
+          description: Number representing the current tier the courier is at
+          type: integer
+        orders_delivered:
+          description: Number of orders delivered by the courier for this quest
+          type: integer
+      type: object
+    QuestParticipationHistory:
+      example:
+        tier_reached: 5
+        courier_id: 6
+        quest_id: 1
+        id: 0
+        outcome: outcome
+        participation_date: 2000-01-23T04:56:07.000+00:00
+      properties:
+        id:
+          description: Unique identifier for the quest participation history
+          type: integer
+        courier_id:
+          description: ID of the courier
+          type: integer
+        quest_id:
+          description: ID of the quest
+          type: integer
+        participation_date:
+          description: Date when the courier participated in the quest
+          format: date-time
+          type: string
+        outcome:
+          description: "Outcome of the quest participation (e.g., completed, not completed)"
+          type: string
+        tier_reached:
+          description: "Number representing the tier reached by the courier. If not\
+            \ completed, this field will be null. If completed, this field will be\
+            \ the tier number."
+          type: integer
+      type: object
