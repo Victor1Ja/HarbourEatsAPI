@@ -36,7 +36,7 @@ data class QuestTier(
     @get:JsonProperty("order_goal") val orderGoal: kotlin.Int? = null,
 
     @Schema(example = "null", description = "Reward associated with achieving this tier")
-    @get:JsonProperty("reward") val reward: kotlin.String? = null
+    @get:JsonProperty("reward") val reward: kotlin.Int? = null
 ) {
 
 }

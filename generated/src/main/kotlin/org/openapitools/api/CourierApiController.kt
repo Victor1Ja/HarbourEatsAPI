@@ -2,7 +2,6 @@ package org.openapitools.api
 
 import org.openapitools.model.CourierQuestProgress
 import org.openapitools.model.Quest
-import org.openapitools.model.QuestParticipationHistory
 import org.openapitools.model.RewardClaimInput
 import io.swagger.v3.oas.annotations.*
 import io.swagger.v3.oas.annotations.enums.*
@@ -38,49 +37,49 @@ class CourierApiController() {
 
     @Operation(
         summary = "Get courier's quests",
-        operationId = "courierQuestsGet",
+        operationId = "courierCourierIdQuestsGet",
         description = """Retrieve all quests assigned to the courier.""",
         responses = [
-            ApiResponse(responseCode = "200", description = "A list of quests", content = [Content(array = ArraySchema(schema = Schema(implementation = Quest::class)))]) ]
+            ApiResponse(responseCode = "200", description = "The progress of the courier for each active quest", content = [Content(array = ArraySchema(schema = Schema(implementation = Quest::class)))]) ]
     )
     @RequestMapping(
         method = [RequestMethod.GET],
-        value = ["/courier/quests"],
+        value = ["/courier/{courier_id}/quests"],
         produces = ["application/json"]
     )
-    fun courierQuestsGet(): ResponseEntity<List<Quest>> {
+    fun courierCourierIdQuestsGet(@Parameter(description = "ID of the courier", required = true) @PathVariable("courier_id") courierId: kotlin.Int): ResponseEntity<List<Quest>> {
         return ResponseEntity(HttpStatus.NOT_IMPLEMENTED)
     }
 
     @Operation(
         summary = "Get courier's quest participation history",
-        operationId = "courierQuestsQuestIdHistoryGet",
-        description = """Retrieve participation history of the courier for a specific quest.""",
+        operationId = "courierCourierIdQuestsQuestIdHistoryGet",
+        description = """The progress of the courier for each quest they have participated in.""",
         responses = [
-            ApiResponse(responseCode = "200", description = "Courier's quest participation history", content = [Content(array = ArraySchema(schema = Schema(implementation = QuestParticipationHistory::class)))]) ]
+            ApiResponse(responseCode = "200", description = "Courier's quest participation history", content = [Content(array = ArraySchema(schema = Schema(implementation = CourierQuestProgress::class)))]) ]
     )
     @RequestMapping(
         method = [RequestMethod.GET],
-        value = ["/courier/quests/{quest_id}/history"],
+        value = ["/courier/{courier_id}/quests/{quest_id}/history"],
         produces = ["application/json"]
     )
-    fun courierQuestsQuestIdHistoryGet(@Parameter(description = "ID of the quest", required = true) @PathVariable("quest_id") questId: kotlin.Int): ResponseEntity<List<QuestParticipationHistory>> {
+    fun courierCourierIdQuestsQuestIdHistoryGet(@Parameter(description = "ID of the quest", required = true) @PathVariable("quest_id") questId: kotlin.Int,@Parameter(description = "ID of the courier", required = true) @PathVariable("courier_id") courierId: kotlin.Int): ResponseEntity<List<CourierQuestProgress>> {
         return ResponseEntity(HttpStatus.NOT_IMPLEMENTED)
     }
 
     @Operation(
         summary = "Get quest progress for a courier",
-        operationId = "courierQuestsQuestIdProgressGet",
+        operationId = "courierCourierIdQuestsQuestIdProgressGet",
         description = """Retrieve the progress of a specific quest for the courier.""",
         responses = [
             ApiResponse(responseCode = "200", description = "Courier's quest progress", content = [Content(schema = Schema(implementation = CourierQuestProgress::class))]) ]
     )
     @RequestMapping(
         method = [RequestMethod.GET],
-        value = ["/courier/quests/{quest_id}/progress"],
+        value = ["/courier/{courier_id}/quests/{quest_id}/progress"],
         produces = ["application/json"]
     )
-    fun courierQuestsQuestIdProgressGet(@Parameter(description = "ID of the quest", required = true) @PathVariable("quest_id") questId: kotlin.Int): ResponseEntity<CourierQuestProgress> {
+    fun courierCourierIdQuestsQuestIdProgressGet(@Parameter(description = "ID of the quest", required = true) @PathVariable("quest_id") questId: kotlin.Int,@Parameter(description = "ID of the courier", required = true) @PathVariable("courier_id") courierId: kotlin.Int): ResponseEntity<CourierQuestProgress> {
         return ResponseEntity(HttpStatus.NOT_IMPLEMENTED)
     }
 

@@ -18,8 +18,6 @@ import io.swagger.v3.oas.annotations.media.Schema
  * @param id Unique identifier for the quest
  * @param name Name of the quest
  * @param duration Duration of the quest in days
- * @param createdBy ID of the admin who created the quest
- * @param createdAt Timestamp indicating when the quest was created
  */
 data class Quest(
 
@@ -30,13 +28,7 @@ data class Quest(
     @get:JsonProperty("name") val name: kotlin.String? = null,
 
     @Schema(example = "null", description = "Duration of the quest in days")
-    @get:JsonProperty("duration") val duration: kotlin.Int? = null,
-
-    @Schema(example = "null", description = "ID of the admin who created the quest")
-    @get:JsonProperty("created_by") val createdBy: kotlin.Int? = null,
-
-    @Schema(example = "null", description = "Timestamp indicating when the quest was created")
-    @get:JsonProperty("created_at") val createdAt: java.time.OffsetDateTime? = null
+    @get:JsonProperty("duration") val duration: kotlin.Int? = null
 ) {
 
 }

@@ -248,22 +248,29 @@ paths:
   #               items:
   #                 $ref: '#/components/schemas/QuestParticipationHistory'
 
-  /courier/quests:
+  /courier/{courier_id}/quests:
     get:
       summary: Get courier's quests
       description: Retrieve all quests assigned to the courier.
       tags:
           - Courier
+      parameters:
+        - in: path
+          name: courier_id
+          required: true
+          description: ID of the courier
+          schema:
+            type: integer
       responses:
         '200':
-          description: A list of quests
+          description: The progress of the courier for each active quest
           content:
             application/json:
               schema:
                 type: array
                 items:
                   $ref: '#/components/schemas/Quest'
-  /courier/quests/{quest_id}/progress:
+  /courier/{courier_id}/quests/{quest_id}/progress:
     get:
       summary: Get quest progress for a courier
       description: Retrieve the progress of a specific quest for the courier.
@@ -276,6 +283,12 @@ paths:
           description: ID of the quest
           schema:
             type: integer
+        - in: path
+          name: courier_id
+          required: true
+          description: ID of the courier
+          schema:
+            type: integer
       responses:
         '200':
           description: Courier's quest progress
@@ -283,10 +296,10 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/CourierQuestProgress'
-  /courier/quests/{quest_id}/history:
+  /courier/{courier_id}/quests/{quest_id}/history:
     get:
       summary: Get courier's quest participation history
-      description: Retrieve participation history of the courier for a specific quest.
+      description: The progress of the courier for each quest they have participated in.
       tags:
           - Courier
       parameters:
@@ -294,6 +307,12 @@ paths:
           name: quest_id
           required: true
           description: ID of the quest
+          schema:
+            type: integer
+        - in: path
+          name: courier_id
+          required: true
+          description: ID of the courier
           schema:
             type: integer
       responses:
@@ -304,7 +323,7 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/QuestParticipationHistory'
+                  $ref: '#/components/schemas/CourierQuestProgress'
   /courier/rewards:
     post:
       summary: Claim rewards
@@ -344,74 +363,94 @@ components:
         name:
           type: string
           description: Name of the quest
+          nullable: false
         duration:
           type: integer
           description: Duration of the quest in days
+          nullable: false
+        created_at:
+          type: string
+          format: date-time
+          description: Date when the quest was created
+          nullable: false
     TierInput:
       type: object
       properties:
         tier_number:
           type: integer
           description: Number representing the tier level
+          nullable: false
         order_goal:
           type: integer
           description: Number of orders required to achieve this tier
+          nullable: false
         reward:
-          type: string
+          type: integer
           description: Reward associated with achieving this tier
+          nullable: false
     RewardClaimInput:
       type: object
       properties:
         courier_id:
           type: integer
           description: ID of the courier claiming the reward
+          nullable: false
+        quest_id:
+            type: integer
+            description: ID of the quest for which the reward is being claimed
+            nullable: false
+        tier_number:
+            type: integer
+            description: Number representing the tier level for which the reward is being claimed
+            nullable: false
     CourierProgressUpdateInput:
       type: object
       properties:
         courier_id:
           type: integer
           description: ID of the courier
+          nullable: false
         orders_delivered:
           type: integer
           description: Number of orders delivered by the courier
+          nullable: false
     Quest:
       type: object
       properties:
         id:
           type: integer
           description: Unique identifier for the quest
+          nullable: false
         name:
           type: string
           description: Name of the quest
+          nullable: false
         duration:
           type: integer
           description: Duration of the quest in days
-        created_by:
-          type: integer
-          description: ID of the admin who created the quest
-        created_at:
-          type: string
-          format: date-time
-          description: Timestamp indicating when the quest was created
-
+          nullable: false
     QuestTier:
       type: object
       properties:
         id:
           type: integer
           description: Unique identifier for the quest tier
+          nullable: false
         quest_id:
           type: integer
           description: ID of the quest to which this tier belongs
         tier_number:
           type: integer
           description: Number representing the tier level
+          nullable: false
         order_goal:
           type: integer
           description: Number of orders required to achieve this tier
+          nullable: false
         reward:
-          type: string
+          type: integer
           description: Reward associated with achieving this tier
+          nullable: false
 
     # Courier:
     #   type: object
@@ -425,16 +464,9 @@ components:
     #     email:
     #       type: string
     #       description: Email address of the courier
-    #     phone_number:
+    #     phone:
     #       type: string
     #       description: Phone number of the courier
-    #     active:
-    #       type: boolean
-    #       description: Boolean indicating whether the courier is active or not
-    #     created_at:
-    #       type: string
-    #       format: date-time
-    #       description: Timestamp indicating when the courier was registered
 
     CourierQuestProgress:
       type: object
@@ -442,35 +474,16 @@ components:
         courier_id:
           type: integer
           description: ID of the courier
+          nullable: false
         quest_id:
           type: integer
           description: ID of the quest
+          nullable: false
         current_tier:
           type: integer
           description: Number representing the current tier the courier is at
+          nullable: false
         orders_delivered:
           type: integer
           description: Number of orders delivered by the courier for this quest
-
-    QuestParticipationHistory:
-      type: object
-      properties:
-        id:
-          type: integer
-          description: Unique identifier for the quest participation history
-        courier_id:
-          type: integer
-          description: ID of the courier
-        quest_id:
-          type: integer
-          description: ID of the quest
-        participation_date:
-          type: string
-          format: date-time
-          description: Date when the courier participated in the quest
-        outcome:
-          type: string
-          description: Outcome of the quest participation (e.g., completed, not completed)
-        tier_reached:
-          type: integer
-          description: Number representing the tier reached by the courier. If not completed, this field will be null. If completed, this field will be the tier number.
+          nullable: false
