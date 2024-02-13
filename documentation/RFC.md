@@ -87,7 +87,7 @@ HarbourEats is a food delivery company aiming to enhance courier engagement by i
 
 ### OpenAPI Specification
 
-[OpenAPI Specification](openapi.yaml)
+[OpenAPI Specification](../specs/harbour-eats-v1.yaml)
 
 ## Conclusion
 
