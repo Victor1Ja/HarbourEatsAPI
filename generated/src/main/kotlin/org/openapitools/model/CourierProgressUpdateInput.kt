@@ -21,10 +21,10 @@ import io.swagger.v3.oas.annotations.media.Schema
 data class CourierProgressUpdateInput(
 
     @Schema(example = "null", description = "ID of the courier")
-    @get:JsonProperty("courier_id") val courierId: kotlin.Int? = null,
+    @get:JsonProperty("courier_id") val courierId: kotlin.Int,
 
     @Schema(example = "null", description = "Number of orders delivered by the courier")
-    @get:JsonProperty("orders_delivered") val ordersDelivered: kotlin.Int? = null
+    @get:JsonProperty("orders_delivered") val ordersDelivered: kotlin.Int
 ) {
 
 }

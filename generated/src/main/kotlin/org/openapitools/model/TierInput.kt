@@ -22,13 +22,13 @@ import io.swagger.v3.oas.annotations.media.Schema
 data class TierInput(
 
     @Schema(example = "null", description = "Number representing the tier level")
-    @get:JsonProperty("tier_number") val tierNumber: kotlin.Int? = null,
+    @get:JsonProperty("tier_number") val tierNumber: kotlin.Int,
 
     @Schema(example = "null", description = "Number of orders required to achieve this tier")
-    @get:JsonProperty("order_goal") val orderGoal: kotlin.Int? = null,
+    @get:JsonProperty("order_goal") val orderGoal: kotlin.Int,
 
     @Schema(example = "null", description = "Reward associated with achieving this tier")
-    @get:JsonProperty("reward") val reward: kotlin.String? = null
+    @get:JsonProperty("reward") val reward: kotlin.Int
 ) {
 
 }
