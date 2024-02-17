@@ -1,11 +1,10 @@
 package org.example.models;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
+import lombok.ToString;
 
 @Entity
+@ToString
 public class QuestTierModel {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -13,9 +12,11 @@ public class QuestTierModel {
 
     private Integer questId;
 
-    private int tier_number;
+    @Column(name = "tier_number")
+    private int tierNumber;
 
-    private int order_goal;
+    @Column(name = "order_goal")
+    private int orderGoal;
 
     private int reward;
 
@@ -35,20 +36,20 @@ public class QuestTierModel {
         this.questId = questId;
     }
 
-    public int getTier_number() {
-        return tier_number;
+    public int getTierNumber() {
+        return tierNumber;
     }
 
-    public void setTier_number(int tier_number) {
-        this.tier_number = tier_number;
+    public void setTierNumber(int tierNumber) {
+        this.tierNumber = tierNumber;
     }
 
-    public int getOrder_goal() {
-        return order_goal;
+    public int getOrderGoal() {
+        return orderGoal;
     }
 
-    public void setOrder_goal(int order_goal) {
-        this.order_goal = order_goal;
+    public void setOrderGoal(int order_goal) {
+        this.orderGoal = order_goal;
     }
 
     public int getReward() {

@@ -11,11 +11,11 @@ import org.openapitools.model.CourierQuestProgress;
 import org.openapitools.model.Quest;
 import org.openapitools.model.RewardClaimInput;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.stereotype.Component;
 
 import java.util.List;
 
-@RestController
+@Component
 public class CourierController extends CourierApiController {
     CourierQuestProgressRepository courierQuestProgressRepository;
     QuestRepository questRepository;

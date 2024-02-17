@@ -13,12 +13,13 @@ import org.openapitools.model.QuestTier;
 import org.openapitools.model.TierInput;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
 
-@RestController
+@Component
 public class AdminController  extends AdminApiController{
 
     QuestRepository questRepository;
@@ -31,8 +32,8 @@ public class AdminController  extends AdminApiController{
         this.questRepository = questRepository;
         this.questTierRepository = questTierRepository;
     }
-    @NotNull
     @Override
+    @NotNull
     public ResponseEntity<List<Quest>> adminQuestsGet() {
         var quests = this.questRepository.findAll();
         var response = new ArrayList<Quest>();
@@ -62,7 +63,6 @@ public class AdminController  extends AdminApiController{
 
     @NotNull
     @Override
-    @PutMapping("/admin/quests/{id}")
     public ResponseEntity<Quest> adminQuestsIdPut(@PathVariable int id,@RequestParam @NotNull QuestInput questInput) {
         var questModel = this.questRepository.findById(id);
         questModel.ifPresent(questModel1 -> {
@@ -92,7 +92,7 @@ public class AdminController  extends AdminApiController{
         var tiers = this.questTierRepository.findByQuestId( questId);
         var response = new ArrayList<QuestTier>();
         for (var tier : tiers) {
-            var tierOut = new QuestTier(tier.getId(), tier.getQuestId(), tier.getTier_number(), tier.getOrder_goal(), tier.getReward());
+            var tierOut = new QuestTier(tier.getId(), tier.getQuestId(), tier.getTierNumber(), tier.getOrderGoal(), tier.getReward());
             response.add(tierOut);
         }
         return ResponseEntity.ok().body(response);
@@ -105,10 +105,10 @@ public class AdminController  extends AdminApiController{
     public ResponseEntity<QuestTier> adminQuestsQuestIdTiersPost(int questId, @NotNull TierInput tierInput) {
         QuestTierModel questTierModel = new QuestTierModel();
         questTierModel.setQuestId(questId);
-        questTierModel.setTier_number(tierInput.getTierNumber());
+        questTierModel.setTierNumber(tierInput.getTierNumber());
         questTierModel.setReward(tierInput.getReward());
         this.questTierRepository.save(questTierModel);
-        var tier = new QuestTier(questTierModel.getId(), questTierModel.getQuestId(), questTierModel.getTier_number(), questTierModel.getOrder_goal(), questTierModel.getReward());
+        var tier = new QuestTier(questTierModel.getId(), questTierModel.getQuestId(), questTierModel.getTierNumber(), questTierModel.getOrderGoal(), questTierModel.getReward());
         return ResponseEntity.ok().body(tier);
     }
 
@@ -124,7 +124,7 @@ public class AdminController  extends AdminApiController{
     public ResponseEntity<QuestTier> adminQuestsQuestIdTiersTierIdGet(int questId, int tierId) {
         var questTierModel = this.questTierRepository.findById(tierId);
         return questTierModel.map(questTierModel1 -> {
-            var tier = new QuestTier(questTierModel1.getId(), questTierModel1.getQuestId(), questTierModel1.getTier_number(), questTierModel1.getOrder_goal(), questTierModel1.getReward());
+            var tier = new QuestTier(questTierModel1.getId(), questTierModel1.getQuestId(), questTierModel1.getTierNumber(), questTierModel1.getOrderGoal(), questTierModel1.getReward());
             return ResponseEntity.ok().body(tier);
         }).orElseGet(() -> ResponseEntity.notFound().build());
     }
@@ -134,7 +134,7 @@ public class AdminController  extends AdminApiController{
     public ResponseEntity<QuestTier> adminQuestsQuestIdTiersTierIdPut(int questId, int tierId, @NotNull TierInput tierInput) {
         var questTierModel = this.questTierRepository.findById(tierId);
         questTierModel.ifPresent(questTierModel1 -> {
-            questTierModel1.setOrder_goal(tierInput.getOrderGoal());
+            questTierModel1.setOrderGoal(tierInput.getOrderGoal());
             questTierModel1.setReward(tierInput.getReward());
             this.questTierRepository.save(questTierModel1);
         });

@@ -22,13 +22,13 @@ import io.swagger.v3.oas.annotations.media.Schema
 data class RewardClaimInput(
 
     @Schema(example = "null", description = "ID of the courier claiming the reward")
-    @get:JsonProperty("courier_id") val courierId: kotlin.Int? = null,
+    @get:JsonProperty("courier_id") val courierId: kotlin.Int,
 
     @Schema(example = "null", description = "ID of the quest for which the reward is being claimed")
-    @get:JsonProperty("quest_id") val questId: kotlin.Int? = null,
+    @get:JsonProperty("quest_id") val questId: kotlin.Int,
 
     @Schema(example = "null", description = "Number representing the tier level for which the reward is being claimed")
-    @get:JsonProperty("tier_number") val tierNumber: kotlin.Int? = null
+    @get:JsonProperty("tier_number") val tierNumber: kotlin.Int
 ) {
 
 }

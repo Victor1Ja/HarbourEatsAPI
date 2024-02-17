@@ -2,12 +2,13 @@ package org.example.controllers;
 
 import kotlin.Unit;
 import org.example.accessingdatajpa.CourierQuestProgressRepository;
-import org.example.models.CourierQuestProgressModel;
 import org.jetbrains.annotations.NotNull;
 import org.openapitools.api.SystemApiController;
 import org.openapitools.model.CourierProgressUpdateInput;
 import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Component;
 
+@Component
 public class SystemController extends SystemApiController {
 
     CourierQuestProgressRepository courierQuestProgressRepository;

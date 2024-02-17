@@ -1,20 +1,35 @@
 package org.example.models;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
+import lombok.ToString;
 
 @Entity
+@ToString
 public class CourierQuestProgressModel {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
-    private Integer courier_id;
-    private Integer quest_id;
-    private int current_tier;
-    private int orders_delivered;
+    
+    @Column(name = "courier_id")
+    private Integer courierId;
 
+//    @ManyToOne
+//    @JoinColumn(name = "courier_id", referencedColumnName = "id")
+//    private CourierModel courier;
+//
+//    @ManyToOne
+//    @JoinColumn(name = "quest_id", referencedColumnName = "id")
+//    private QuestModel quest;
+
+    @Column(name = "quest_id")
+    private Integer questId;
+    
+    @Column(name = "current_tier")
+    private int currentTier;
+
+    
+    @Column(name = "orders_delivered")
+    private int ordersDelivered;
     public Integer getId() {
         return id;
     }
@@ -24,41 +39,38 @@ public class CourierQuestProgressModel {
     }
 
     public Integer getCourierId() {
-        return courier_id;
+        return courierId;
     }
 
-    public void setCourierId(Integer courier_id) {
-        this.courier_id = courier_id;
+    public void setCourierId(Integer courierId) {
+        this.courierId = courierId;
     }
 
     public Integer getQuestId() {
-        return quest_id;
+        return questId;
     }
 
-    public void setQuestId(Integer quest_id) {
-        this.quest_id = quest_id;
+    public void setQuestId(Integer questId) {
+        this.questId = questId;
     }
 
     public int getCurrentTier() {
-        return current_tier;
+        return currentTier;
     }
 
-    public void setCurrentTier(int current_tier) {
-        this.current_tier = current_tier;
+    public void setCurrentTier(int currentTier) {
+        this.currentTier = currentTier;
     }
 
     public int getOrdersDelivered() {
-        return orders_delivered;
+        return ordersDelivered;
     }
 
-    public void setOrdersDelivered(int orders_delivered) {
-        this.orders_delivered = orders_delivered;
+    public void setOrdersDelivered(int ordersDelivered) {
+        this.ordersDelivered = ordersDelivered;
     }
 
     public CourierQuestProgressModel() {
     }
-
-
-
 
 }

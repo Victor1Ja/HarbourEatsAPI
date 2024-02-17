@@ -1,8 +1,10 @@
 package org.example.models;
 
 import jakarta.persistence.*;
+import lombok.ToString;
 
 @Entity
+@ToString
 public class QuestClaimModel {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -13,6 +15,27 @@ public class QuestClaimModel {
     private Integer questId;
     @Column(name = "tier_id")
     private Integer tierId;
+
+//    @ManyToOne
+//    @JoinColumn(name = "courier_id", referencedColumnName = "id")
+//    private CourierModel courier;
+//
+//    @ManyToOne
+//    @JoinColumn(name = "quest_id", referencedColumnName = "id")
+//    private QuestModel quest;
+//
+//    @ManyToOne
+//    @JoinColumn(name = "tier_id", referencedColumnName = "id")
+//    private QuestTierModel tier;
+
+    public QuestClaimModel() {
+    }
+
+    public QuestClaimModel( int CourierId, int QuestId, int TierId) {
+        this.courierId = CourierId;
+        this.questId = QuestId;
+        this.tierId = TierId;
+    }
 
     public Integer getId() {
         return id;
@@ -37,24 +60,5 @@ public class QuestClaimModel {
     public void setQuestId(Integer questId) {
         this.questId = questId;
     }
-
-    public Integer getTierId() {
-        return tierId;
-    }
-
-    public void setTierId(Integer tierId) {
-        this.tierId = tierId;
-    }
-
-    public QuestClaimModel() {
-    }
-
-    public QuestClaimModel(Integer courierId, Integer questId, Integer tierId) {
-        this.courierId = courierId;
-        this.questId = questId;
-        this.tierId = tierId;
-    }
-
-
 
 }

@@ -1,24 +1,25 @@
 package org.example.models;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import org.openapitools.model.Quest;
+import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
 
 import javax.annotation.Nullable;
 
 @Entity
+@ToString
 public class QuestModel  {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
-
     private String name;
     private Integer duration;
-    @Nullable
+
+    @Column(name = "created_at")
     private String created_at;
-    @Nullable
+
+    @Column(name = "created_by")
     private String created_by;
 
     public QuestModel() {
